@@ -1,0 +1,24 @@
+<div>
+  <p><%= @picture.user_id %></p>
+  <p><%= @picture.album_id %></p>
+  <p><%= @picture.url %></p>
+</div>
+
+<div class="likeButton">
+  <% if @current_user.present? %>
+    <% if @picture.liked?(@current_user) %>
+      <%= button_to "Unlike", like_path(@picture), method: "delete" %>
+    <% else %>
+      <%= button_to "Like", like_path(@picture), method: "put" %>
+    <% end %>
+  <% end %>
+   <%= pluralize @picture.likes.count, "person" %>
+   liked this picture
+</div>
+
+<div>
+  <% if @current_user.present? && (@current_user.picture.include?(@picture) || @current_user.admin?) %>
+  <%= link_to "Edit picture", edit_picture_path(@picture), :class => 'editButton' %>
+  <%= button_to "Delete picture", picture_path(@picture.id), :class => 'deleteButton', :method => "delete", :data => { :confirm => "are you sure" } %>
+  <% end %>
+</div>

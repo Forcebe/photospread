@@ -1,0 +1,63 @@
+body {
+  background-color: #5bc8f0;
+  text-align: center;
+  margin-top: 3%;
+}
+
+h1, h2, h3, h4 {
+  color: #fefefe;
+  margin-top: 10%;
+}
+
+.container {
+  max-width: 960px;
+
+}
+
+.likeButton {
+  position: relative;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 20px;
+  border-radius: 3em;
+}
+.buttonStyle {
+  border-radius: 0.5em;
+}
+
+.likeCount {
+  color: white;
+}
+
+.controls {
+
+}
+
+.editButton {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  color: black;
+  background-color: #efefef;
+  border: 2px solid #858585;
+  padding: 1px 6px 1px 6px;
+  border-radius: 0.3em;
+  margin: 5px;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 70px;
+  right: 130px;
+  margin: 5px;
+  border-radius: 0.3em;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.userEmail {
+  color: #007bff;
+  font-size: 15px;
+}
