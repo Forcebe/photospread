@@ -17,8 +17,7 @@
        <% if @current_user.present? %>
          <% if @current_user.admin? %>
            <%= link_to 'All users', users_path %>
-         <% end %>
-        
+         <% end %>        
          <%= link_to "Log out #{ @current_user.email }", login_path, :method => 'delete' %>
          <%= link_to 'Back', :back  %>
        <% else %>

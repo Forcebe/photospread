@@ -27,6 +27,6 @@ class SessionController < ApplicationController
     # clear session
     session[:user_id] = nil
     # go back to home
-    redirect_to root_path
+    redirect_to login_path
   end
 end

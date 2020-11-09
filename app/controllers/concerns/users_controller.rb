@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :check_for_admin, :only => [:index]
-
+    
   def index
     @users = User.all
   end
@@ -23,11 +22,10 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     @user.destroy
     redirect_to users_path
-  render
+  end
 
   private
   def user_params
     params.require(:user).permit(:email, :name, :password, :password_confirmation)
-  end
   end
 end
