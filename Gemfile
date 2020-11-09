@@ -29,7 +29,6 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bcrypt', '~> 3.1.7'
 
 gem 'jquery-rails'
 
