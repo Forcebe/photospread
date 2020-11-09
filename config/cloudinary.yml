@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: digthng9k
+  api_key: '814295816611638'
+  api_secret: E8xkqiMSh-9VI9EfezrCtWEWHyY
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: digthng9k
+  api_key: '814295816611638'
+  api_secret: E8xkqiMSh-9VI9EfezrCtWEWHyY
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: digthng9k
+  api_key: '814295816611638'
+  api_secret: E8xkqiMSh-9VI9EfezrCtWEWHyY
+  enhance_image_tag: true
+  static_file_support: false
