@@ -1,17 +1,16 @@
-<<<<<<< HEAD
 <h1>home coming soon</h1>
 
-<% if @current_user.present? %>
-  <h1>Your Pictures</h1>
-  <p>You are currently logged in as <%= @current_user.email %></p>
-<% else %>
-  <h1>All Pictures</h1>
-=======
-<% if  @current_user.present?%>
-  <p>Logged in as <%= @current_user.name %></p>
-  <%= link_to 'Logout', login_path, :method => 'delete' %>
-<% else %>
-  <p>Not currently logged in</p>
-  <%= link_to 'Login', login_path %>
->>>>>>> 1325e5f088f94217ba306eed06c8f309d0a370e8
+  <% if @current_user.present? %>
+    <h1>Your Pictures</h1>
+    <p>You are currently logged in as <%= @current_user.email %></p>
+  <% else %>
+    <h1>All Pictures</h1>
+
+  <% if  @current_user.present?%>
+    <p>Logged in as <%= @current_user.name %></p>
+    <%= link_to 'Logout', login_path, :method => 'delete' %>
+  <% else %>
+    <p>Not currently logged in</p>
+    <%= link_to 'Login', login_path %>
+  <% end %>
 <% end %>
