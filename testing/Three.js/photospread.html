@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>three.js css3d - periodic table</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link type="text/css" rel="stylesheet" href="./resources/examples/main.css">
+<style>
+a {
+color: #8ff;
+}
+#menu {
+	position: absolute;
+	bottom: 20px;
+	width: 100%;
+	text-align: center;
+}
+img{
+	width: 480px;
+	height: 320px;
+}
+.element {
+	margin: 10px;
+	width: 480px;
+	height: 320px;
+	box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+	border: 15px solid rgba(255,255,255,1);
+	font-family: Helvetica, sans-serif;
+	text-align: center;
+	line-height: normal;
+	cursor: pointer;
+}
+.element:hover {
+	box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+	border: 15px solid rgba(255,255,255,0.75);
+}
+
+button {
+	width: 480px;
+	height: 320px;
+	font-size: 100px;
+	color: rgba(255,255,255,0.75);
+	background: transparent;
+	/* outline: 1px solid rgba(0,0,0,0.8); */
+	border: 0px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+/* button:hover {
+	background-color: rgba(0,255,255,0.5);
+} */
+button:active {
+	color: #000000;
+	background-color: rgba(0,255,255,0.75);
+}
+</style>
+</head>
+<body>
+<!-- <button id="test">TEST</button> -->
+<div id="container"></div>
+
+<script type="module">
+	import * as THREE from './resources/build/three.module.js';
+	import { TWEEN } from './resources/examples/jsm/libs/tween.module.min.js';
+	import { TrackballControls } from './resources/examples/jsm/controls/TrackballControls.js';
+	import { CSS3DRenderer, CSS3DObject } from './resources/examples/jsm/renderers/CSS3DRenderer.js';
+
+	let camera, scene, renderer;
+	let controls;
+	let buttonStatus = true;
+	const pictures = ['http://placekitten.com/480/320',
+										'http://placekitten.com/481/320',
+										'http://placekitten.com/482/320',
+										'http://placekitten.com/483/320',
+										'http://placekitten.com/484/320',
+										'http://placekitten.com/485/320',
+										'http://placekitten.com/486/320',
+										'http://placekitten.com/487/320',
+										'http://placekitten.com/488/320',
+										'http://placekitten.com/489/320',
+										'http://placekitten.com/480/321',
+										'http://placekitten.com/480/322',
+										'http://placekitten.com/480/323',
+										'http://placekitten.com/480/324']
+	const objects = [];
+	const stack = [];
+	const grid = [];
+	init();
+	animate();
+	function init() {
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+		camera.position.z = 4000;
+		scene = new THREE.Scene();
+
+		for ( let i = 0; i <= pictures.length; i ++ ) {
+			const element = document.createElement( 'div' );
+			element.className = 'element';
+			element.style.backgroundColor = 'rgba(100,100,255,0)';
+			if (i<pictures.length){
+				const picture = document.createElement( 'img' );
+				picture.className = 'picture';
+				picture.src = pictures[i];
+				element.appendChild( picture )
+			}
+			if (i === pictures.length) {
+				const open = document.createElement( 'button' );
+					open.id = 'open';
+					open.textContent = "Open";
+					element.appendChild( open );
+			}
+			const objectCSS = new CSS3DObject( element );
+			objectCSS.position.x = Math.random() * 70;
+			objectCSS.position.y = Math.random() * 70;
+			objectCSS.position.z = i;
+			scene.add( objectCSS );
+			objects.push( objectCSS );
+			//
+			const object = new THREE.Object3D();
+			object.position.x = objectCSS.position.x;
+			object.position.y = objectCSS.position.y;
+			object.position.z = objectCSS.position.z;
+			object.rotateZ((Math.random() * 0.4)-0.2);
+			stack.push( object );
+		}
+
+		renderer = new CSS3DRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.getElementById( 'container' ).appendChild( renderer.domElement );
+		//
+		controls = new TrackballControls( camera, renderer.domElement );
+		controls.minDistance = 4000;
+		controls.maxDistance = 4000;
+
+
+		transform( stack, 10 );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+	}
+
+	controls.addEventListener( 'change', render );
+
+	const button = document.getElementById( 'open' );
+	button.addEventListener( 'click', function () {
+		if ( buttonStatus){
+			transform( grid, 1000 );
+			const button = document.getElementById( 'open' );
+			setTimeout(function () {
+        button.textContent = 'Close';
+    	}, 1000);
+
+			buttonStatus = false;
+		} else {
+			transform( stack, 1000 );
+			const button = document.getElementById( 'open' );
+			setTimeout(function () {
+        button.textContent = 'Open';
+    	}, 1000);
+			buttonStatus = true;
+		}
+
+	}, false );
+
+
+	for ( let i = 0; i <= pictures.length; i += 1 ) {
+	  const spread = new THREE.Object3D();
+	  spread.position.x = ( (i % 5) * 600 ) - 1200;
+	  spread.position.y = - ( Math.floor(i/5) * 800 ) + 900;
+		grid.push( spread );
+	}
+
+
+	function transform( targets, duration ) {
+	TWEEN.removeAll();
+	for ( let i = 0; i < objects.length; i ++ ) {
+		const object = objects[ i ];
+		const target = targets[ i ];
+		new TWEEN.Tween( object.position )
+		.to( { x: target.position.x, y: target.position.y, z: target.position.z }, duration )
+		.easing( TWEEN.Easing.Exponential.InOut )
+		.start();
+		new TWEEN.Tween( object.rotation )
+		.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
+		.easing( TWEEN.Easing.Exponential.InOut )
+		.start();
+	}
+	new TWEEN.Tween( this )
+		.to( {}, duration * 2 )
+		.onUpdate( render )
+		.start();
+	}
+	function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		render();
+	}
+	function animate() {
+		requestAnimationFrame( animate );
+		TWEEN.update();
+		controls.update();
+	}
+	function render() {
+		renderer.render( scene, camera );
+		renderer.antialias = true;
+	}
+</script>
+</body>
+</html>
