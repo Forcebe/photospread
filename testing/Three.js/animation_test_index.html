@@ -131,6 +131,7 @@
           scene.children[i].position.y = - ( Math.floor(i/5) * 20 ) + 20;
           scene.children[i].rotation.set(0,0,0);
         }
+        state.stacked = false
       }
   	}
   	window.addEventListener('click', zoom, false);
@@ -157,14 +158,18 @@
 
     const toStack = function() {
       console.log('stacking')
-      this.tl = new TimelineMax().delay(.3)
-      this.tl.to( //TODO investigate how to write this
-        for (i=0;i<scene.children.length-1;i++){
-          scene.children[i].position.x = 0;
-          scene.children[i].position.y = 0;
-          scene.children[i].rotation.set(0,0,((Math.random() * 0.4)-0.2));
-        }
-      )
+
+      for (i=0;i<scene.children.length-1;i++){
+        let rotation = (Math.random() * 0.4)-0.2
+        this.tl = new TimelineMax().delay(1)
+        this.tl.to(scene.children[i].position, 0.4, {
+          x: 0,
+          y: 0
+        })
+        this.tl.to(scene.children[i].rotation, 0.4, {
+          z: rotation
+        })
+      }
     }
 // function onMouseMove(event) {
 //     event.preventDefault();
