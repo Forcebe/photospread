@@ -9,9 +9,10 @@
 </head>
 <body>
   <script src="./resources/build/three.js"></script>
+  <!-- <script src="./resources/examples/jsm/libs/tween.module.min.js"></script> -->
   <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js" charset="utf-8"></script>
-  <script>
-
+  <script type="module">
+    import { TWEEN } from './resources/examples/jsm/libs/tween.module.min.js';
     const pictures = ['http://placekitten.com/480/320',
   										'http://placekitten.com/481/320',
   										'http://placekitten.com/482/320',
@@ -44,7 +45,6 @@
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     })
-
     const objects = [];
     const stack = [];
     const grid = [];
@@ -118,11 +118,11 @@
   		event.preventDefault();
   		onMouseMove(event);
   		raycaster.setFromCamera(mouse, camera);
-  		intersected = raycaster.intersectObjects(objects);
+  		intersected = raycaster.intersectObjects(scene.children);
   		// console.log(scene.children)
   		// console.log(intersected.length)
       if (!state.stacked && intersected.length === 0) {
-        toStack()
+        transform( stack, 1000 );
         state.stacked = true;
 
         // camera.position.set(0,0,40)
@@ -146,13 +146,13 @@
           }
       } else {
         console.log('spread out')
-        console.log(objects)
-        for (i=0;i<objects.length;i++){
-          objects[i].position.x = ( (i % 5) * 20 ) - 40;
-          objects[i].position.y = - ( Math.floor(i/5) * 20 ) + 20;
-          objects[i].rotation.set(0,0,0);
-        }
-        state.stacked = false
+        console.log(scene.children)
+        transform( grid, 1000 );
+        // for (i=0;i<scene.children.length-1;i++){
+        //   scene.children[i].position.x = ( (i % 5) * 20 ) - 40;
+        //   scene.children[i].position.y = - ( Math.floor(i/5) * 20 ) + 20;
+        //   scene.children[i].rotation.set(0,0,0);
+        // }
       }
   	}
   	window.addEventListener('click', zoom, false);
@@ -176,22 +176,37 @@
         z: toZ
       })
     }
-
-    const toStack = function() {
-      console.log('stacking')
-
-      for (i=0;i<scene.children.length-1;i++){
-        let rotation = (Math.random() * 0.4)-0.2
-        this.tl = new TimelineMax().delay(1)
-        this.tl.to(scene.children[i].position, 0.4, {
-          x: 0,
-          y: 0
-        })
-        this.tl.to(scene.children[i].rotation, 0.4, {
-          z: rotation
-        })
-      }
-    }
+    function transform( targets, duration ) {
+      console.log("action!!!")
+  	TWEEN.removeAll();
+  	for ( let i = 0; i < objects.length; i ++ ) {
+  		const object = objects[ i ];
+  		const target = targets[ i ];
+  		new TWEEN.Tween( object.position )
+  		.to( { x: target.position.x, y: target.position.y, z: target.position.z }, duration )
+  		.easing( TWEEN.Easing.Exponential.InOut )
+  		.start();
+  		new TWEEN.Tween( object.rotation )
+  		.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
+  		.easing( TWEEN.Easing.Exponential.InOut )
+  		.start();
+  	}
+  	new TWEEN.Tween( this )
+  		.to( {}, duration * 2 )
+  		.onUpdate( render )
+  		.start();
+  	}
+    // const toStack = function() {
+    //   console.log('stacking')
+    //   this.tl = new TimelineMax().delay(.3)
+    //   this.tl.to( //TODO investigate how to write this
+    //     for (i=0;i<scene.children.length-1;i++){
+    //       scene.children[i].position.x = 0;
+    //       scene.children[i].position.y = 0;
+    //       scene.children[i].rotation.set(0,0,((Math.random() * 0.4)-0.2));
+    //     }
+    //   )
+    // }
 // function onMouseMove(event) {
 //     event.preventDefault();
 //
