@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_013144) do
     t.text "email"
     t.text "name"
     t.string "password_digest"
-    t.boolean "admin", default: false
+    t.boolean "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

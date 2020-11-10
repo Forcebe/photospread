@@ -1,1 +1,15 @@
+<% if @current_user.present? %>
 <h1>New Albums</h1>
+
+
+<%= form_for(@album, :html => {:multipart => true}) do |f|  %>
+
+<%= f.label :name %>
+<%= f.text_field :name, :placeholder => 'Portraits' %>
+
+<%= f.label "Album Image" %>
+<%= f.cl_image_upload :image %>
+
+<%= f.submit %>
+
+<%= end %>
