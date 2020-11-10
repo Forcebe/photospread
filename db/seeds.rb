@@ -24,7 +24,7 @@ puts "Albums and users"
 u4.albums << a1 <<a2 << a3
 puts "#{ Album.count } albums"
 
-User.destroy_all
+Picture.destroy_all
 puts "Pictures and Albums"
 
 rand(15..36).times do |i|
