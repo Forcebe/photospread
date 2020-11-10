@@ -15,16 +15,24 @@
     <nav>
     <div class="container">
        <%= link_to 'Home', root_path %>
+       <br>
        <% if @current_user.present? %>
          <% if @current_user.admin? %>
            <%= link_to 'All users', users_path %>
-           <%= link_to 'New Album', albums_path %>
+           <br>
+           <%= link_to 'New Album', new_album_path %>
+           <br>
+           <%= link_to 'Albums', albums_path %>
+           <br>
          <% end %>
          <%= link_to "Log out #{ @current_user.email }", login_path, :method => 'delete' %>
+         <br>
          <%= link_to 'Back', :back  %>
        <% else %>
          <%= link_to 'Sign up', new_user_path %>
+         <br>
          <%= link_to 'Login', login_path %>
+         <br>
          <%= link_to 'Back', :back  %>
        <% end %>
       </div><!-- container -->

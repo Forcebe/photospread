@@ -1,1 +1,17 @@
+<% if @current_user.present? %>
 <h1>Edit Album</h1>
+<% end %>
+
+<%= form_for(@album, :html => {:multipart => true}) do |f| %>
+  <div>
+    <%= f.label "Album Name: " %>
+    <%= f.text_field :name, :placeholder => 'Portraits' %>
+  </div>
+  <div>
+    <%= f.label "Album Images: " %>
+    <%= f.file_field :images, :multiple => true %>
+  </div>
+  <div>
+  <%= f.submit "Edit Album" %>
+  </div>
+<% end %>
