@@ -9,7 +9,7 @@
 </head>
 <body>
   <script src="./resources/build/three.js"></script>
-
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js" charset="utf-8"></script>
   <script>
 
     const pictures = ['http://placekitten.com/480/320',
@@ -82,30 +82,47 @@
   		// console.log(mouse.x)
   		// console.log(mouse.y)
   	}
+
+    const state = {
+      stacked: false,
+      zoomedOut: true,
+      zoomedIn: false,
+      startX: '',
+      startY: '',
+      startZ: '',
+    }
+
   	function zoom(event){
+
   		event.preventDefault();
   		onMouseMove(event);
   		raycaster.setFromCamera(mouse, camera);
   		intersected = raycaster.intersectObjects(scene.children);
   		// console.log(scene.children)
   		// console.log(intersected.length)
-      if (intersected.length === 0) {
-        for (i=0;i<scene.children.length-1;i++){
-          scene.children[i].position.x = 0;
-          scene.children[i].position.y = 0;
-          scene.children[i].rotation.set(0,0,((Math.random() * 0.4)-0.2));
-        }
+      if (!state.stacked && intersected.length === 0) {
+        toStack()
+        state.stacked = true;
 
-        camera.position.set(0,0,40)
-      } else if (intersected.length === 1) {
-        if (camera.position.z < 10) {
-          console.log('zoom-out')
-          camera.position.set(0,0,40)
-        } else {
-          camera.position.x = intersected[0].object.position.x;
-          camera.position.y = intersected[0].object.position.y;
-          camera.position.z = 7
-        }
+        // camera.position.set(0,0,40)
+      } else if (intersected.length >= 1 && !state.stacked) {
+          const picture = intersected[0].object
+          if (state.zoomed) {
+            console.log('zooming out')
+            zoomOut(picture, state.startX, state.startY, state.startZ)
+            state.zoomed = false;
+            // camera.position.set(0,0,40)
+          } else if (!state.zoomed){
+            state.startX = picture.position.x
+            state.startY = picture.position.y
+            state.startZ = picture.position.z
+            console.log('zooming in')
+            zoomIn(picture)
+            state.zoomed = true
+            // camera.position.x = intersected[0].object.position.x;
+            // camera.position.y = intersected[0].object.position.y;
+            // camera.position.z = 7
+          }
       } else {
         console.log('spread out')
         console.log(scene.children)
@@ -118,6 +135,37 @@
   	}
   	window.addEventListener('click', zoom, false);
   	window.addEventListener('mousemove', onMouseMove, false);
+
+    const zoomIn = function(picture) {
+      this.tl = new TimelineMax().delay(.3)
+      this.tl.to(picture.position, 0.4, {
+        x: 0,
+        y: 0,
+        z: 32
+      })
+    }
+    const zoomOut = function(picture, toX, toY, toZ) {
+      // console.log('zooming out')
+      this.tl = new TimelineMax().delay(.3)
+      // console.log(`${toX}, ${toY}, ${toZ}`)
+      this.tl.to(picture.position, 0.4, {
+        x: toX,
+        y: toY,
+        z: toZ
+      })
+    }
+
+    const toStack = function() {
+      console.log('stacking')
+      this.tl = new TimelineMax().delay(.3)
+      this.tl.to( //TODO investigate how to write this
+        for (i=0;i<scene.children.length-1;i++){
+          scene.children[i].position.x = 0;
+          scene.children[i].position.y = 0;
+          scene.children[i].rotation.set(0,0,((Math.random() * 0.4)-0.2));
+        }
+      )
+    }
 // function onMouseMove(event) {
 //     event.preventDefault();
 //
