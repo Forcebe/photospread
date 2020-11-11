@@ -28,12 +28,12 @@
   										'http://placekitten.com/480/324',
   										'http://placekitten.com/480/325']
 
-    const scene = new THREE.Scene();
+    var scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
+    var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
     camera.position.z = 40;
 
-    const renderer = new THREE.WebGLRenderer({antialias: true});
+    var renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setClearColor("#e5e5e5");
     renderer.setSize(window.innerWidth,window.innerHeight);
 
@@ -49,12 +49,12 @@
     const stack = [];
     const grid = [];
 
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
+    var raycaster = new THREE.Raycaster();
+    var mouse = new THREE.Vector2();
 
-    const geometry = new THREE.PlaneGeometry( 15, 10 );
-    for( i = 0; i<pictures.length;i++) {
-      const loader = new THREE.TextureLoader();
+    var geometry = new THREE.PlaneGeometry( 15, 10 );
+    for(var i = 0; i<pictures.length;i++) {
+      var loader = new THREE.TextureLoader();
       const material = new THREE.MeshLambertMaterial({map:loader.load(pictures[i])
       });
 
@@ -73,7 +73,7 @@
     }
     console.log(objects)
     console.log(grid)
-    for(i = 0; i<pictures.length;i++) {
+    for(var i = 0; i<pictures.length;i++) {
 
       const object = new THREE.Object3D();
 			object.position.x = 0;
@@ -84,12 +84,12 @@
     }
     console.log(stack)
 
-    const light = new THREE.PointLight( 0xffffff, 1, 0 );
+    var light = new THREE.PointLight( 0xffffff, 1, 0 );
     light.position.set(1, 1, 100 );
     scene.add(light)
 
 
-    const render = function() {
+    var render = function() {
     requestAnimationFrame(render);
 
 
@@ -113,7 +113,7 @@
       startZ: '',
     }
 
-  	function click(event){
+  	function zoom(event){
 
   		event.preventDefault();
   		onMouseMove(event);
@@ -147,11 +147,14 @@
       } else {
         console.log('spread out')
         console.log(objects)
-        unstack()
-        state.stacked = false
+        for (i=0;i<objects.length;i++){
+          objects[i].position.x = ( (i % 5) * 20 ) - 40;
+          objects[i].position.y = - ( Math.floor(i/5) * 20 ) + 20;
+          objects[i].rotation.set(0,0,0);
+        }
       }
   	}
-  	window.addEventListener('click', click, false);
+  	window.addEventListener('click', zoom, false);
   	window.addEventListener('mousemove', onMouseMove, false);
 
     const zoomIn = function(picture) {
@@ -173,42 +176,17 @@
       })
     }
 
-    const toStack = function() {
-      console.log('stacking')
-
-      for (i=0;i<objects.length;i++){
-        let rotation = (Math.random() * 0.4)-0.2
-        this.tl = new TimelineMax().delay(0.3)
-        this.tl.to(objects[i].position, 0.4, {
-          x: stack[i].position.x,
-          y: stack[i].position.y,
-          delay: ((Math.random()*0.4)-0.2)
-        })
-        this.tl.to(objects[i].rotation, 0.2, {
-          z: rotation
-        })
-      }
-    }
-
-    const unstack = function() {
-      console.log('unstacking')
-
-      for (i=0;i<objects.length;i++) {
-
-        this.tl = new TimelineMax().delay(0.3)
-        this.tl.to(objects[i].rotation, 0.2, {
-          x: 0,
-          y: 0,
-          z: 0
-        })
-        this.tl.to(objects[i].position, 0.4, {
-          x: grid[i].position.x,
-          y: grid[i].position.y,
-          delay: (i*0.02)
-        })
-
-      }
-    }
+    // const toStack = function() {
+    //   console.log('stacking')
+    //   this.tl = new TimelineMax().delay(.3)
+    //   this.tl.to( //TODO investigate how to write this
+    //     for (i=0;i<scene.children.length-1;i++){
+    //       scene.children[i].position.x = 0;
+    //       scene.children[i].position.y = 0;
+    //       scene.children[i].rotation.set(0,0,((Math.random() * 0.4)-0.2));
+    //     }
+    //   )
+    // }
 // function onMouseMove(event) {
 //     event.preventDefault();
 //
