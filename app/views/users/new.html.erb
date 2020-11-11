@@ -1,33 +1,30 @@
-<h2>Sign Up</h2>
+<div class="css_form_container">
+<h2>Sign up</h2>
 
 <% if @user.errors.any? %>
-  <ol>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ol>
+  <% @user.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
 <% end %>
 
 <%= form_for @user do |f| %>
   <div>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
+    <%= f.email_field :email, :placeholder => 'Email address', :required => true, :class => 'css_form-control' %>
   </div>
 
   <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :placeholder => 'Name', :required => true, :class => 'css_form-control' %>
   </div>
 
   <div>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, :placeholder => 'Password', :required => true, :class => 'css_form-control' %>
   </div>
 
   <div>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, :placeholder => 'Confirm password', :required => true, :class => 'css_form-control' %>
   </div>
-
-    <%= f.submit "Sign up!" %>
+  <div>
+    <%= f.submit "Sign up", :class => 'submit' %>
+  </div>
 <% end %>
+</div>
