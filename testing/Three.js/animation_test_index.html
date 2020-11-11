@@ -106,11 +106,11 @@
 
     const state = {
       stacked: false,
-      zoomedOut: true,
-      zoomedIn: false,
+      zoomed: false,
       startX: '',
       startY: '',
       startZ: '',
+      zoomedObject: '',
     }
 
   	function click(event){
@@ -121,14 +121,20 @@
   		intersected = raycaster.intersectObjects(objects);
   		// console.log(scene.children)
   		// console.log(intersected.length)
-      if (!state.stacked && intersected.length === 0) {
+      if (!state.stacked && intersected.length === 0 && !state.zoomed) {
         toStack()
         state.stacked = true;
+
+      } else if (intersected.length === 0 && state.zoomed) {
+        const picture = state.zoomedObject
+        console.log('zooming out')
+        zoomOut(picture, state.startX, state.startY, state.startZ)
+        state.zoomed = false;
 
         // camera.position.set(0,0,40)
       } else if (intersected.length >= 1 && !state.stacked) {
           const picture = intersected[0].object
-          if (state.zoomed) {
+          if (state.zoomed && picture === state.zoomedObject ) {
             console.log('zooming out')
             zoomOut(picture, state.startX, state.startY, state.startZ)
             state.zoomed = false;
@@ -137,14 +143,16 @@
             state.startX = picture.position.x
             state.startY = picture.position.y
             state.startZ = picture.position.z
+            state.zoomedObject = picture
             console.log('zooming in')
             zoomIn(picture)
+            console.log()
             state.zoomed = true
             // camera.position.x = intersected[0].object.position.x;
             // camera.position.y = intersected[0].object.position.y;
             // camera.position.z = 7
           }
-      } else {
+      } else if (state.stacked){
         console.log('spread out')
         console.log(objects)
         unstack()
@@ -182,6 +190,7 @@
         this.tl.to(objects[i].position, 0.4, {
           x: stack[i].position.x,
           y: stack[i].position.y,
+          z: stack[i].position.z,
           delay: ((Math.random()*0.4)-0.2)
         })
         this.tl.to(objects[i].rotation, 0.2, {
