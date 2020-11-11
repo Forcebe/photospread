@@ -1,3 +1,9 @@
   <% if @current_user.present? %>
-    <p>You are currently logged in as <%= @current_user.email %></p>
+  <div class="welcome_message">
+    <h1>Welcome <%= @current_user.name %>!</h1>
+  </div>
+  <% else %>
+  <div class="welcome_message">
+  <h1>Welcome to Photospread</h1>
+  </div>
     <% end %>

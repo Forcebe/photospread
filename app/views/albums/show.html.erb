@@ -7,7 +7,7 @@
 
 <div class="controls">
   <% if @current_user.present? && (@current_user.albums.include?(@album) || @current_user.admin?) %>
-  <%= link_to "Edit Album", edit_album_path(@album), :class => 'editButton' %>
+  <%# link_to "Edit Album", edit_album_path(@album), :class => 'editButton' %>
   <%= button_to "Delete Album", album_path(@album.id), :class => 'deleteButton', :method => "delete", :data => { :confirm => "are you sure" } %>
   <% end %>
 </div>

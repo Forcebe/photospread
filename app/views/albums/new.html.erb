@@ -1,3 +1,4 @@
+<div class="">
 <% if @current_user.present? %>
 <h1>Create Album</h1>
 <% end %>
@@ -5,14 +6,15 @@
 
 <%= form_for(@album, :html => {:multipart => true}) do |f| %>
   <div>
-    <%= f.label "Album Name: " %>
+    <%= f.label "Album Name" %>
     <%= f.text_field :name, :placeholder => 'Portraits' %>
   </div>
   <div>
-    <%= f.label "Album Images: " %>
+    <%= f.label "Album Images" %>
     <%= f.file_field :images, :multiple => true %>
   </div>
   <div>
   <%= f.submit "Create Album" %>
   </div>
 <% end %>
+</div>

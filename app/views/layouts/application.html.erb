@@ -5,38 +5,57 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <%= cloudinary_js_config %>
+
   </head>
 
   <body>
-    <nav>
-    <div class="container">
-       <%= link_to 'Home', root_path %>
-       <br>
-       <% if @current_user.present? %>
-         <% if @current_user.admin? %>
-           <%= link_to 'All users', users_path %>
-           <br>
-           <%= link_to 'New Album', new_album_path %>
-           <br>
-           <%= link_to 'Albums', albums_path %>
-           <br>
-         <% end %>
-         <%= link_to "Log out #{ @current_user.email }", login_path, :method => 'delete' %>
-         <br>
-         <%= link_to 'Back', :back  %>
-       <% else %>
-         <%= link_to 'Sign up', new_user_path %>
-         <br>
-         <%= link_to 'Login', login_path %>
-         <br>
-         <%= link_to 'Back', :back  %>
-       <% end %>
-      </div><!-- container -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" <%= link_to 'Photospread', root_path %></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <% if @current_user.present? %>
+            <% if @current_user.admin? %>
+          <li class="nav-item">
+            <a class="nav-link" <%= link_to 'All users', users_path %><span class="sr-only">(current)</span></a>
+            <% end %>
+            <% if @current_user.present? %>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" <%= link_to 'New Album', new_album_path %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" <%= link_to 'Gallery', albums_path %></a>
+            <% end %>
+          <li class="nav-item">
+            <a class="nav-link" <%= link_to "Log out", login_path, :method => 'delete'%></a>
+          </li>
+          <% else %>
+          <li class="nav-item">
+            <a class="nav-link" <%= link_to 'Sign up', new_user_path %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" <%= link_to 'Login', login_path %></a>
+          </li>
+          <% end %>
+          <li class="nav-item">
+            <a class="nav-link" <%= link_to 'Back', :back %></a>
+          </li>
+        </ul>
+      </div>
     </nav>
+
     <%= yield %>
   </body>
 </html>
