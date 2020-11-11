@@ -147,11 +147,7 @@
       } else {
         console.log('spread out')
         console.log(objects)
-        for (i=0;i<objects.length;i++){
-          objects[i].position.x = ( (i % 5) * 20 ) - 40;
-          objects[i].position.y = - ( Math.floor(i/5) * 20 ) + 20;
-          objects[i].rotation.set(0,0,0);
-        }
+        unstack()
         state.stacked = false
       }
   	}
@@ -182,16 +178,35 @@
 
       for (i=0;i<scene.children.length-1;i++){
         let rotation = (Math.random() * 0.4)-0.2
-        this.tl = new TimelineMax().delay(1)
+        this.tl = new TimelineMax().delay(0.3)
         this.tl.to(scene.children[i].position, 0.4, {
           x: 0,
-          y: 0
+          y: 0,
+          delay: (0.02 * i)
         })
         this.tl.to(scene.children[i].rotation, 0.4, {
           z: rotation
         })
       }
     }
+
+    const unstack = function() {
+      console.log('unstacking')
+
+      for (i=0;i<scene.children.length-1;i++) {
+        this.tl = new TimelineMax().delay(0.3)
+        this.tl.to(scene.children[i].position, 0.4, {
+          x: ( (i % 5) * 20 ) - 40,
+          y: ( Math.floor(i/5) * 20 ) + 20,
+          delay: (0.02 * i)
+      })
+      this.tl.to(scene.children[i].rotation, 0.4, {
+        x: 0,
+        y: 0,
+        z: 0
+      })
+    }
+  }
 // function onMouseMove(event) {
 //     event.preventDefault();
 //
