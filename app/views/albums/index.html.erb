@@ -2,27 +2,34 @@
 <h1>Your Albums</h1>
 <% end %>
 
-<% @albums.each do |album| %>
-<%= link_to album.name, album_path(album), :class => 'btn btn-outline-info' %>
-<% end %>
 
-<div id="container"></div>
+
+<!-- <div id="container"></div> -->
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js" charset="utf-8"></script>
 <script>
+  // const album1 = []
+  // const album2 = []
+  // const album3 = []
 
-
-  const album1 = []
-  console.log("<%= @albums[1].pictures[0].url %>")
-  console.log("<%= @albums[1].pictures[1].url %>")
-  console.log("<%= @albums[1].pictures[2].url %>")
-  console.log("<%= @albums[0].pictures.length %>")
-  console.log("<%= @albums[1].pictures.length %>")
-  console.log("<%= @albums[2].pictures.length %>")
-  const fetchedAlbum1 = "<%= @albums[1].pictures %>"
-  <% @albums[0].pictures.each do |picture| %>
-  album1.push("<%= picture.url %>")
+  let album1 = []
+  <% @albums[0].images.each do |image| %>
+    album1.push("https://res.cloudinary.com/djinkyjyh/image/upload/c_fill,h_360,w_640/"+"<%= image %>")
   <% end %>
-  console.log(album1)
+
+  let album2 = []
+  <% @albums[1].images.each do |image| %>
+    album2.push("https://res.cloudinary.com/djinkyjyh/image/upload/c_fill,h_360,w_640/"+"<%= image %>")
+  <% end %>
+
+  let album3 = []
+  <% @albums[2].images.each do |image| %>
+    album3.push("https://res.cloudinary.com/djinkyjyh/image/upload/c_fill,h_360,w_640/"+"<%= image %>")
+  <% end %>
+
+
+
+
+
   //Arrays containing the image URLs for each album. To come from server.
   // const album1 = ['http://placekitten.com/480/320',
   //                   'http://placekitten.com/481/320',
@@ -39,45 +46,54 @@
   //                   'http://placekitten.com/480/323',
   //                   'http://placekitten.com/480/324',
   //                   'http://placekitten.com/480/325']
-  const album2 = ['http://placekitten.com/480/320',
-                    'http://placekitten.com/481/320',
-                    'http://placekitten.com/482/320',
-                    'http://placekitten.com/483/320',
-                    'http://placekitten.com/484/320',
-                    'http://placekitten.com/485/320',
-                    'http://placekitten.com/486/320',
-                    'http://placekitten.com/487/320',
-                    'http://placekitten.com/488/320',
-                    'http://placekitten.com/489/320',
-                    'http://placekitten.com/480/321',
-                    'http://placekitten.com/480/322',
-                    'http://placekitten.com/480/323',
-                    'http://placekitten.com/480/324',
-                    'http://placekitten.com/480/325']
-  const album3 = ['http://placekitten.com/480/320',
-                    'http://placekitten.com/481/320',
-                    'http://placekitten.com/482/320',
-                    'http://placekitten.com/483/320',
-                    'http://placekitten.com/484/320',
-                    'http://placekitten.com/485/320',
-                    'http://placekitten.com/486/320',
-                    'http://placekitten.com/487/320',
-                    'http://placekitten.com/488/320',
-                    'http://placekitten.com/489/320',
-                    'http://placekitten.com/480/321',
-                    'http://placekitten.com/480/322',
-                    'http://placekitten.com/480/323',
-                    'http://placekitten.com/480/324',
-                    'http://placekitten.com/480/325']
+  // const album2 = ['http://placekitten.com/480/320',
+  //                   'http://placekitten.com/481/320',
+  //                   'http://placekitten.com/482/320',
+  //                   'http://placekitten.com/483/320',
+  //                   'http://placekitten.com/484/320',
+  //                   'http://placekitten.com/485/320',
+  //                   'http://placekitten.com/486/320',
+  //                   'http://placekitten.com/487/320',
+  //                   'http://placekitten.com/488/320',
+  //                   'http://placekitten.com/489/320',
+  //                   'http://placekitten.com/480/321',
+  //                   'http://placekitten.com/480/322',
+  //                   'http://placekitten.com/480/323',
+  //                   'http://placekitten.com/480/324',
+  //                   'http://placekitten.com/480/325']
+  // const album3 = ['http://placekitten.com/480/320',
+  //                   'http://placekitten.com/481/320',
+  //                   'http://placekitten.com/482/320',
+  //                   'http://placekitten.com/483/320',
+  //                   'http://placekitten.com/484/320',
+  //                   'http://placekitten.com/485/320',
+  //                   'http://placekitten.com/486/320',
+  //                   'http://placekitten.com/487/320',
+  //                   'http://placekitten.com/488/320',
+  //                   'http://placekitten.com/489/320',
+  //                   'http://placekitten.com/480/321',
+  //                   'http://placekitten.com/480/322',
+  //                   'http://placekitten.com/480/323',
+  //                   'http://placekitten.com/480/324',
+  //                   'http://placekitten.com/480/325']
 
   //Create ThreeJS scene
   const scene = new THREE.Scene();
 
 
+
+
+
+
+  //Place threeJS scene into a container. TODO: modify to resize dynamically
+  const container = document.getElementById("container")
+  let containerWidth = window.innerWidth;
+  let containerHeight = window.innerHeight;
+
   //Create camera
   const camera = new THREE.PerspectiveCamera(
     75,
-    window.innerWidth/window.innerHeight,
+    window.innerWidth/(window.innerHeight-150),
     0.1,
     1000
   );
@@ -85,24 +101,21 @@
   camera.position.set( 0, -2, 40 )
   camera.lookAt(0, 0, 0)
 
-  //Place threeJS scene into a container. TODO: modify to resize dynamically
-  const container = document.getElementById("container")
-  let containerWidth = container.offsetWidth;
-  let containerHeight = container.offsetHeight;
   const renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setClearColor("#e5e5e5");
-  renderer.setSize(containerWidth,containerHeight);
+  renderer.setSize(window.innerWidth,(window.innerHeight-150));
   // renderer.setSize(window.innerWidth,window.innerHeight);
   renderer.shadowMap.enabled = true;
 
-  container.appendChild(renderer.domElement);
+  document.body.appendChild(renderer.domElement);
   // document.body.appendChild(renderer.domElement);
-
-  // window.addEventListener('resize', () => {
-  // renderer.setSize(window.innerWidth,window.innerHeight);
-  // camera.aspect = window.innerWidth / window.innerHeight;
-  // camera.updateProjectionMatrix();
-  // })
+  let canvas = document.querySelector("canvas")
+  window.addEventListener('resize', () => {
+    canvas = document.querySelector("canvas");
+  renderer.setSize(window.innerWidth,(window.innerHeight-150));
+  camera.aspect = window.innerWidth / (window.innerHeight-150);
+  camera.updateProjectionMatrix();
+  })
 
   //Object arrays contain the objects for each album
   const objects1 = [];
@@ -129,6 +142,7 @@
   scene.add(ambientLight);
   //Renders the scene
   const render = function() {
+    console.log("render")
   requestAnimationFrame(render);
   renderer.render(scene, camera);
   };
@@ -220,9 +234,12 @@
   light.shadow.camera.far = 500; // default
 
   //Find mouse location
+
   function onMouseMove( event ) {
-    mouse.x = ( ( event.clientX - container.offsetLeft ) / container.clientWidth ) * 2 - 1;
-    mouse.y = - ( ( event.clientY - container.offsetTop ) / container.clientHeight ) * 2 + 1;
+    // mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    // mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    mouse.x = ( ( event.clientX - canvas.offsetLeft ) / canvas.clientWidth ) * 2 - 1;
+    mouse.y = - ( ( event.clientY - canvas.offsetTop ) / canvas.clientHeight ) * 2 + 1;
     // console.log(mouse.x)
     // console.log(mouse.y)
   }
@@ -243,7 +260,7 @@
   //Function to handle clicks
   function click(event){
     //prevents default action and works out which object is being intersected
-    event.preventDefault();
+    // event.preventDefault();
     onMouseMove(event);
     raycaster.setFromCamera(mouse, camera);
     int1 = raycaster.intersectObjects(objects1);
@@ -394,7 +411,6 @@
   //   }
   // }
   // window.addEventListener('mousemove', tilt, false);
-
 
 render();
 

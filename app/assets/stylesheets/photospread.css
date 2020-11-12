@@ -2,23 +2,32 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 
+*{
 
+}
 body {
+  height: 100vh;
+  margin: 0;
   background-color: black;
   text-align: center;
-  margin-top: 1%;
 }
 
-
-#container {
+canvas {
+  margin: 0 auto;
+  display: block;
+}
+canvas:hover{
+  cursor: grab;
+}
+/* #container {
     margin: 0 auto;
     display: block;
-    width: 960px;
-    height: 540px;
+    max-width: 960px;
+    max-height: 540px;
 }
 #container:hover{
   cursor: grab;
-}
+} */
 
 .welcome_message {
   font-family: 'Oswald', sans-serif;
