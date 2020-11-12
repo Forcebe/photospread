@@ -31,19 +31,19 @@ puts "Pictures and Albums"
   p = Picture.create(
     :url => "http://placekitten.com/600/#{rand(390..410)}"
   )
-  a1.pictures << p
+  a1.images << p
 end
 15.times do |i|
   p = Picture.create(
     :url => "http://placekitten.com/600/#{rand(390..410)}"
   )
-  a2.pictures << p
+  a2.images << p
 end
 15.times do |i|
   p = Picture.create(
     :url => "http://placekitten.com/600/#{rand(390..410)}"
   )
-  a3.pictures << p
+  a3.images << p
 end
 
 puts "#{ Picture.count } pictures"
