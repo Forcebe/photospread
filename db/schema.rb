@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_11_10_053731) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "images", default: [], array: true
+    t.integer "album_id"
   end
 
   create_table "likes", force: :cascade do |t|
