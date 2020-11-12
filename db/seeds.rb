@@ -28,21 +28,15 @@ Picture.destroy_all
 puts "Pictures and Albums"
 
 15.times do |i|
-  p = Picture.create(
-    :url => "http://placekitten.com/600/#{rand(390..410)}"
-  )
+  p = "http://placekitten.com/600/#{rand(390..410)}"
   a1.images << p
 end
 15.times do |i|
-  p = Picture.create(
-    :url => "http://placekitten.com/600/#{rand(390..410)}"
-  )
+  p = "http://placekitten.com/600/#{rand(390..410)}"
   a2.images << p
 end
 15.times do |i|
-  p = Picture.create(
-    :url => "http://placekitten.com/600/#{rand(390..410)}"
-  )
+  p = "http://placekitten.com/600/#{rand(390..410)}"
   a3.images << p
 end
 
