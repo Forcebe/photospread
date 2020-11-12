@@ -8,11 +8,12 @@
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
+  <div id="container"></div>
   <script src="./resources/build/three.js"></script>
   <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js" charset="utf-8"></script>
   <script>
 
-    const pictures = ['http://placekitten.com/480/320',
+    const album1 = ['http://placekitten.com/480/320',
   										'http://placekitten.com/481/320',
   										'http://placekitten.com/482/320',
   										'http://placekitten.com/483/320',
@@ -27,6 +28,37 @@
   										'http://placekitten.com/480/323',
   										'http://placekitten.com/480/324',
   										'http://placekitten.com/480/325']
+    const album2 = ['http://placekitten.com/480/320',
+  										'http://placekitten.com/481/320',
+  										'http://placekitten.com/482/320',
+  										'http://placekitten.com/483/320',
+  										'http://placekitten.com/484/320',
+  										'http://placekitten.com/485/320',
+  										'http://placekitten.com/486/320',
+  										'http://placekitten.com/487/320',
+  										'http://placekitten.com/488/320',
+  										'http://placekitten.com/489/320',
+  										'http://placekitten.com/480/321',
+  										'http://placekitten.com/480/322',
+  										'http://placekitten.com/480/323',
+  										'http://placekitten.com/480/324',
+  										'http://placekitten.com/480/325']
+    const album3 = ['http://placekitten.com/480/320',
+  										'http://placekitten.com/481/320',
+  										'http://placekitten.com/482/320',
+  										'http://placekitten.com/483/320',
+  										'http://placekitten.com/484/320',
+  										'http://placekitten.com/485/320',
+  										'http://placekitten.com/486/320',
+  										'http://placekitten.com/487/320',
+  										'http://placekitten.com/488/320',
+  										'http://placekitten.com/489/320',
+  										'http://placekitten.com/480/321',
+  										'http://placekitten.com/480/322',
+  										'http://placekitten.com/480/323',
+  										'http://placekitten.com/480/324',
+  										'http://placekitten.com/480/325']
+
 
     const scene = new THREE.Scene();
 
@@ -43,66 +75,110 @@
     camera.position.set( 0, -2, 40 )
     camera.lookAt(0, 0, 0)
 
-
+    const container = document.getElementById("container")
+    let containerWidth = container.offsetWidth;
+    let containerHeight = container.offsetHeight;
     const renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setClearColor("#e5e5e5");
-    renderer.setSize(window.innerWidth,window.innerHeight);
+    renderer.setSize(containerWidth,containerHeight);
+    // renderer.setSize(window.innerWidth,window.innerHeight);
     renderer.shadowMap.enabled = true;
 
-    document.body.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
+    // document.body.appendChild(renderer.domElement);
 
-    window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth,window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    })
+    // window.addEventListener('resize', () => {
+    // renderer.setSize(window.innerWidth,window.innerHeight);
+    // camera.aspect = window.innerWidth / window.innerHeight;
+    // camera.updateProjectionMatrix();
+    // })
 
-    const objects = [];
-    const stack = [];
+    const objects1 = [];
+    const objects2 = [];
+    const objects3 = [];
+
+    const stack1 = [];
+    const stack2 = [];
+    const stack3 = [];
+
     const grid = [];
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
     const wallGeometry = new THREE.BoxGeometry (200, 200, 0.1);
-    const wallMaterial = new THREE.MeshLambertMaterial(0xaaaaaa);
+    const wallMaterial = new THREE.MeshLambertMaterial({ color : 0x3bb7ff, side: THREE.DoubleSide });
     const wall = new THREE.Mesh(wallGeometry, wallMaterial)
     wall.position.set(0, 0, -1);
-    wall.receiveShadow = true
-    scene.add(wall)
+    wall.receiveShadow = true;
+    scene.add(wall);
 
-    const pictureGeometry = new THREE.BoxGeometry( 15, 10, 0.1 );
-    for( i = 0; i<pictures.length;i++) {
-      const loader = new THREE.TextureLoader();
-      const material = new THREE.MeshLambertMaterial({map:loader.load(pictures[i])
-      });
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
 
-      const picture = new THREE.Mesh(pictureGeometry, material);
-      picture.position.x = ( (i % 5) * 20 ) - 40;
-      picture.position.y = - ( Math.floor(i/5) * 20 ) + 20;
-      picture.position.z = 0;
-      picture.castShadow = true;
-      scene.add(picture);
-      objects.push( picture );
+    const render = function() {
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
+    };
 
+
+
+    for(i = 0; i<15;i++) {
       const object = new THREE.Object3D();
-			object.position.x = picture.position.x;
-			object.position.y = picture.position.y;
-			object.position.z = picture.position.z;
+      object.position.x = ( (i % 5) * 18 ) - 36;
+      object.position.y = - ( Math.floor(i/5) * 12 ) +6;
+      object.position.z = 0;
 			grid.push( object );
     }
-    console.log(objects)
-    console.log(grid)
-    for(i = 0; i<pictures.length;i++) {
-
+    for(i = 0; i<15;i++) {
       const object = new THREE.Object3D();
-			object.position.x = 0;
-			object.position.y = 0;
+			object.position.x = -30;
+			object.position.y = 20;
 			object.position.z = i * 0.15;
 			object.rotation.set(0,0,((Math.random() * 0.4)-0.2));
-			stack.push( object );
+			stack1.push( object );
     }
-    console.log(stack)
+    for(i = 0; i<15;i++) {
+      const object = new THREE.Object3D();
+			object.position.x = 0;
+			object.position.y = 20;
+			object.position.z = i * 0.15;
+			object.rotation.set(0,0,((Math.random() * 0.4)-0.2));
+			stack2.push( object );
+    }
+    for(i = 0; i<15;i++) {
+      const object = new THREE.Object3D();
+			object.position.x = 30;
+			object.position.y = 20;
+			object.position.z = i * 0.15;
+			object.rotation.set(0,0,((Math.random() * 0.4)-0.2));
+			stack3.push( object );
+    }
+
+
+    const pictureGeometry = new THREE.BoxGeometry( 16, 9, 0.3 );
+
+    const albumCreate = function(album, objects, stack){
+      for( i = 0; i<album.length;i++) {
+        const loader = new THREE.TextureLoader();
+        const material = new THREE.MeshLambertMaterial({map:loader.load(album[i])
+        });
+
+        const picture = new THREE.Mesh(pictureGeometry, material);
+        picture.position.x = stack[i].position.x;
+  			picture.position.y = stack[i].position.y;
+  			picture.position.z = stack[i].position.z;
+  			picture.rotation.set(0,0,((Math.random() * 0.4)-0.2));
+        picture.castShadow = true;
+        scene.add(picture);
+        objects.push( picture );
+      };
+    }
+    albumCreate(album1, objects1, stack1)
+    albumCreate(album2, objects2, stack2)
+    albumCreate(album3, objects3, stack3)
+
+
 
     const light = new THREE.PointLight( 0xffffff, 1.1, 0 );
     light.position.set(0, 10, 50 );
@@ -123,164 +199,177 @@
     light.shadow.camera.near = 0.5; // default
     light.shadow.camera.far = 500; // default
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
-    scene.add(ambientLight)
 
-
-    const render = function() {
-    requestAnimationFrame(render);
-
-
-    renderer.render(scene, camera);
-    }
-
-    let intersected;
   	function onMouseMove( event ) {
-  		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-  		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+      mouse.x = ( ( event.clientX - container.offsetLeft ) / container.clientWidth ) * 2 - 1;
+      mouse.y = - ( ( event.clientY - container.offsetTop ) / container.clientHeight ) * 2 + 1;
   		// console.log(mouse.x)
   		// console.log(mouse.y)
   	}
 
     const state = {
-      stacked: false,
+      album1Stacked: true,
+      album2Stacked: true,
+      album3Stacked: true,
       zoomed: false,
       startX: '',
       startY: '',
       startZ: '',
       zoomedObject: '',
     }
-
+    let int1;
+    let int2;
+    let int3;
   	function click(event){
 
   		event.preventDefault();
   		onMouseMove(event);
   		raycaster.setFromCamera(mouse, camera);
-  		intersected = raycaster.intersectObjects(objects);
+  		int1 = raycaster.intersectObjects(objects1);
+  		int2 = raycaster.intersectObjects(objects2);
+  		int3 = raycaster.intersectObjects(objects3);
   		// console.log(scene.children)
   		// console.log(intersected.length)
-      if (!state.stacked && intersected.length === 0 && !state.zoomed) {
-        toStack()
-        state.stacked = true;
+      console.log('test click')
+      console.log(int1 === objects1)
+      console.log(int1)
+      console.log(objects1)
+      console.log(int2 === objects2)
+      console.log(int3 === objects3)
 
-      } else if (intersected.length === 0 && state.zoomed) {
-        const picture = state.zoomedObject
-        console.log('zooming out')
-        zoomOut(picture, state.startX, state.startY, state.startZ)
-        state.zoomed = false;
 
-        // camera.position.set(0,0,40)
-      } else if (intersected.length >= 1 && !state.stacked) {
-          const picture = intersected[0].object
-          if (state.zoomed && picture === state.zoomedObject ) {
-            console.log('zooming out')
-            zoomOut(picture, state.startX, state.startY, state.startZ)
-            state.zoomed = false;
-            // camera.position.set(0,0,40)
-          } else if (!state.zoomed){
-            state.startX = picture.position.x
-            state.startY = picture.position.y
-            state.startZ = picture.position.z
-            state.zoomedObject = picture
-            console.log('zooming in')
-            zoomIn(picture)
-            console.log()
-            state.zoomed = true
-            // camera.position.x = intersected[0].object.position.x;
-            // camera.position.y = intersected[0].object.position.y;
-            // camera.position.z = 7
-          }
-      } else if (state.stacked){
-        console.log('spread out')
-        console.log(objects)
-        unstack()
-        state.stacked = false
-      }
+
+
+
+      // if (!state.album1Stacked && !state.album2Stacked && !state.album3Stacked && (int1.length + in2.length + int3.length) === 0 && !state.zoomed) {
+      //   toStack()
+      //   state.stacked = true;
+      //
+      // } else if (state.zoomed) {
+      //   const picture = state.zoomedObject
+      //   console.log('zooming out1')
+      //   zoomOut(picture, state.startX, state.startY, state.startZ)
+      //   state.zoomed = false;
+      //
+      //   // camera.position.set(0,0,40)
+      // } else if (intersected.length > 0 && !state.stacked) {
+      //     const picture = intersected[0].object
+      //     // if (state.zoomed && picture === state.zoomedObject ) {
+      //     //   console.log('zooming out2')
+      //     //   zoomOut(picture, state.startX, state.startY, state.startZ)
+      //     //   state.zoomed = false;
+      //     //   // camera.position.set(0,0,40)
+      //     // } else if (!state.zoomed){
+      //       state.startX = picture.position.x
+      //       state.startY = picture.position.y
+      //       state.startZ = picture.position.z
+      //       state.zoomedObject = picture
+      //       console.log('zooming in')
+      //       zoomIn(picture)
+      //       console.log()
+      //       state.zoomed = true
+      // } else if (intersected.length > 0 && state.stacked){
+      //   console.log('spread out')
+      //   // console.log(objects)
+      //   unstack()
+      //   state.stacked = false
+      // } else {
+      //   console.log('nothing')
+      // }
   	}
   	window.addEventListener('click', click, false);
   	window.addEventListener('mousemove', onMouseMove, false);
 
-    const zoomIn = function(picture) {
-      this.tl = new TimelineMax().delay(.3)
-      this.tl.to(picture.position, 0.4, {
-        x: 0,
-        y: -1.5,
-        z: 32
-      })
-    }
-    const zoomOut = function(picture, toX, toY, toZ) {
-      // console.log('zooming out')
-      this.tl = new TimelineMax().delay(.3)
-      // console.log(`${toX}, ${toY}, ${toZ}`)
-      this.tl.to(picture.position, 0.4, {
-        x: toX,
-        y: toY,
-        z: toZ
-      })
-      // to do paralell to camera
-      // this.tl.to(picture.rotation, 0.4, {
-      //   y: -0.4,
-      // })
-    }
+    // const zoomIn = function(picture) {
+    //   this.tl = new TimelineMax()
+    //   this.tl.to(picture.position, 0.4, {
+    //     x: 0,
+    //     y: -1.5,
+    //     z: 32
+    //   })
+    // }
+    // const zoomOut = function(picture, toX, toY, toZ) {
+    //   // console.log('zooming out')
+    //   this.tl = new TimelineMax()
+    //   // console.log(`${toX}, ${toY}, ${toZ}`)
+    //   this.tl.to(picture.position, 0.4, {
+    //     x: toX,
+    //     y: toY,
+    //     z: 0
+    //   })
+    //   // to do paralell to camera
+    //   // this.tl.to(picture.rotation, 0.4, {
+    //   //   y: -0.4,
+    //   // })
+    // }
+    //
+    // const toStack = function() {
+    //   console.log('stacking')
+    //
+    //   for (i=0;i<objects.length;i++){
+    //     let rotation = (Math.random() * 0.4)-0.2
+    //     this.tl = new TimelineMax()
+    //     this.tl.to(objects[i].position, 0.4, {
+    //       x: stack[i].position.x,
+    //       y: stack[i].position.y,
+    //       z: stack[i].position.z,
+    //       delay: ((Math.random()*0.4)-0.2)
+    //     })
+    //     this.tl.to(objects[i].rotation, 0.2, {
+    //       z: rotation
+    //     })
+    //   }
+    // }
+    //
+    // const unstack = function(objects) {
+    //   console.log('unstacking')
+    //
+    //   for (i=0;i<objects.length;i++) {
+    //
+    //     this.tl = new TimelineMax()
+    //     this.tl.to(objects[i].rotation, 0.2, {
+    //       x: 0,
+    //       y: 0,
+    //       z: 0
+    //     })
+    //     this.tl.to(objects[i].position, 0.4, {
+    //       x: grid[i].position.x,
+    //       y: grid[i].position.y,
+    //       z: grid[i].position.z,
+    //       delay: (i*0.02)
+    //     })
+    //
+    //   }
+    // }
+    // const tilt = function(event) {
+    //   event.preventDefault();
+  	// 	onMouseMove(event);
+  	// 	raycaster.setFromCamera(mouse, camera);
+  	// 	intersected = raycaster.intersectObjects(objects);
+    //   if(!state.stacked && !state.zoomed && intersected.length > 0){
+    //     this.tl = new TimelineMax()
+    //     this.tl.to(intersected[0].object.position, 0.4, {
+    //       z: 2,
+    //       delay: 0.001
+    //     })
+    //   } else if (state.zoomed || state.stacked){
+    //
+    //   } else {
+    //     for (i=0;i<objects.length;i++) {
+    //
+    //       this.tl = new TimelineMax()
+    //       this.tl.to(objects[i].position, 0.4, {
+    //         x: grid[i].position.x,
+    //         y: grid[i].position.y,
+    //         z: 0,
+    //         delay: 0.001
+    //       })
+    //     }
+    //   }
+    // }
+    // window.addEventListener('mousemove', tilt, false);
 
-    const toStack = function() {
-      console.log('stacking')
 
-      for (i=0;i<objects.length;i++){
-        let rotation = (Math.random() * 0.4)-0.2
-        this.tl = new TimelineMax().delay(0.3)
-        this.tl.to(objects[i].position, 0.4, {
-          x: stack[i].position.x,
-          y: stack[i].position.y,
-          z: stack[i].position.z,
-          delay: ((Math.random()*0.4)-0.2)
-        })
-        this.tl.to(objects[i].rotation, 0.2, {
-          z: rotation
-        })
-      }
-    }
-
-    const unstack = function() {
-      console.log('unstacking')
-
-      for (i=0;i<objects.length;i++) {
-
-        this.tl = new TimelineMax().delay(0.3)
-        this.tl.to(objects[i].rotation, 0.2, {
-          x: 0,
-          y: 0,
-          z: 0
-        })
-        this.tl.to(objects[i].position, 0.4, {
-          x: grid[i].position.x,
-          y: grid[i].position.y,
-          delay: (i*0.02)
-        })
-
-      }
-    }
-// function onMouseMove(event) {
-//     event.preventDefault();
-//
-//     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-//     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-//
-//     raycaster.setFromCamera(mouse, camera);
-//
-//     var intersects = raycaster.intersectObjects(scene.children, true);
-//     for (var i = 0; i < intersects.length; i++) {
-//         this.tl = new TimelineMax();
-//         this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut})
-//         this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut})
-//         this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut})
-//         this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5")
-//     }
-// }
-//
-//
-//
-// window.addEventListener('click', onMouseMove);
 render();
 
 
