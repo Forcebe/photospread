@@ -9,6 +9,17 @@ body {
   margin-top: 1%;
 }
 
+
+#container {
+    margin: 0 auto;
+    display: block;
+    width: 960px;
+    height: 540px;
+}
+#container:hover{
+  cursor: grab;
+}
+
 .welcome_message {
   font-family: 'Oswald', sans-serif;
   color: #696a6b;
@@ -47,7 +58,7 @@ body {
   font-size: 20px;
   padding: 10px 43px;
   margin-top: 5%;
-  margin-left: 6%;
+  margin-left: 0%;
 }
 
 .css_form_container {
@@ -63,25 +74,6 @@ body {
   transform: scale(1.5);
 }
 
-.likeButton {
-  position: relative;
-  margin-left: 25%;
-  margin-right: 25%;
-  margin-top: 20px;
-  border-radius: 3em;
-}
-.buttonStyle {
-  border-radius: 0.5em;
-}
-
-.likeCount {
-  color: white;
-}
-
-.controls {
-
-}
-
 .editButton {
   position: absolute;
   top: 70px;
@@ -94,19 +86,16 @@ body {
   margin: 5px;
 }
 
-.deleteButton {
-  position: absolute;
-  top: 70px;
-  right: 130px;
-  margin: 5px;
-  border-radius: 0.3em;
-}
-
-.btn {
-  margin: 10px;
-}
-
 .userEmail {
   color: #007bff;
   font-size: 15px;
+}
+
+#footer {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 12px;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }

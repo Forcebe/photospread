@@ -1,4 +1,4 @@
-<div class="">
+<div class="css_form_container">
 <% if @current_user.present? %>
 <h1>Create Album</h1>
 <% end %>
@@ -14,7 +14,7 @@
     <%= f.file_field :images, :multiple => true %>
   </div>
   <div>
-  <%= f.submit "Create Album" %>
+  <%= f.submit "Create Album", :class => 'submit' %>
   </div>
 <% end %>
 </div>

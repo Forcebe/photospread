@@ -27,19 +27,19 @@ puts "#{ Album.count } albums"
 Picture.destroy_all
 puts "Pictures and Albums"
 
-rand(15..36).times do |i|
+15.times do |i|
   p = Picture.create(
     :url => "http://placekitten.com/600/#{rand(390..410)}"
   )
   a1.pictures << p
 end
-rand(15..36).times do |i|
+15.times do |i|
   p = Picture.create(
     :url => "http://placekitten.com/600/#{rand(390..410)}"
   )
   a2.pictures << p
 end
-rand(15..36).times do |i|
+15.times do |i|
   p = Picture.create(
     :url => "http://placekitten.com/600/#{rand(390..410)}"
   )
