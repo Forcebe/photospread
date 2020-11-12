@@ -28,7 +28,7 @@ class AlbumsController < ApplicationController
     # associate the album with the current user
     @current_user.albums << album
     # redirect_to root_path
-    redirect_to album_path(album)
+    redirect_to albums_path
   end
 
   def edit
