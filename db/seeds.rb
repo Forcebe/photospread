@@ -25,7 +25,6 @@ u4.albums << a1 <<a2 << a3
 puts "#{ Album.count } albums"
 
 Picture.destroy_all
-puts "Pictures and Albums"
 
 15.times do |i|
   p = "http://placekitten.com/600/#{rand(390..410)}"
@@ -39,5 +38,3 @@ end
   p = "http://placekitten.com/600/#{rand(390..410)}"
   a3.images << p
 end
-
-puts "#{ Picture.count } pictures"
