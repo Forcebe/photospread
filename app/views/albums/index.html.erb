@@ -8,17 +8,17 @@
 
   let album1 = []
   <% @albums[0].images.each do |image| %>
-    album1.push("https://res.cloudinary.com/djinkyjyh/image/upload/c_fill,h_360,w_640/"+"<%= image %>")
+    album1.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
   <% end %>
 
   let album2 = []
   <% @albums[1].images.each do |image| %>
-    album2.push("https://res.cloudinary.com/djinkyjyh/image/upload/c_fill,h_360,w_640/"+"<%= image %>")
+    album2.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
   <% end %>
 
   let album3 = []
   <% @albums[2].images.each do |image| %>
-    album3.push("https://res.cloudinary.com/djinkyjyh/image/upload/c_fill,h_360,w_640/"+"<%= image %>")
+    album3.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
   <% end %>
 
   //Create ThreeJS scene
@@ -312,17 +312,25 @@
     int2 = raycaster.intersectObjects(objects2);
     int3 = raycaster.intersectObjects(objects3);
     const intersected = int1.concat(int2, int3)
-    if(!state.stacked && !state.zoomed && intersected.length === 1){
+    if(!state.stacked && !state.zoomed && intersected.length === 1 && intersected[0].object.position.y < 15){
       state.tilted = intersected[0];
       this.tl = new TimelineMax()
-      this.tl.to(intersected[0].object.position, 0.4, {
+      this.tl.to(intersected[0].object.position, 0.1, {
         z: 2,
+        delay: 0.001
+      })
+      this.tl.to(intersected[0].object.rotation, 0.1, {
+        x: 0.05,
         delay: 0.001
       })
     } else if (intersected.length === 0 && state.tilted !== '' && !state.zoomed){
       this.tl = new TimelineMax()
-      this.tl.to(state.tilted.object.position, 0.4, {
+      this.tl.to(state.tilted.object.position, 0.2, {
         z: 0,
+        delay: 0.001
+      })
+      this.tl.to(state.tilted.object.rotation, 0.2, {
+        x: 0,
         delay: 0.001
       })
       state.tilted = ''
