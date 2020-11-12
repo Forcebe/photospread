@@ -7,19 +7,27 @@
 
 
   let album1 = []
-  <% @albums[0].images.each do |image| %>
+  <% if @albums[0] %>
+    <% @albums[0].images.each do |image| %>
     album1.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
+    <% end %>
   <% end %>
 
   let album2 = []
-  <% @albums[1].images.each do |image| %>
-    album2.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
+  <% if @albums[1] %>
+    <% @albums[1].images.each do |image| %>
+      album2.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
+    <% end %>
   <% end %>
 
+
   let album3 = []
-  <% @albums[2].images.each do |image| %>
-    album3.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
+  <% if @albums[2] %>
+    <% @albums[2].images.each do |image| %>
+      album3.push("<%= cl_image_path(image, :width => 640, :height => 360, :crop => :fill) %>")
+    <% end %>
   <% end %>
+
 
   //Create ThreeJS scene
   const scene = new THREE.Scene();

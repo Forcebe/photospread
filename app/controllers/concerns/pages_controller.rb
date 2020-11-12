@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-
   def home
     if @current_user.present?
       @pictures = @current_user.pictures

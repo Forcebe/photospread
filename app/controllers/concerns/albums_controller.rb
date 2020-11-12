@@ -1,4 +1,5 @@
 class AlbumsController < ApplicationController
+  before_action :check_for_login
 
   def index
     @albums = @current_user.albums
