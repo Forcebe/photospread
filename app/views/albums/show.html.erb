@@ -1,7 +1,7 @@
-<div >Showing album:
+<div >
   <p><%= @album.name %></p>
   <% @album.images.each do |i| %>
-    <%= cl_image_tag(i) %>
+    <%= cl_image_tag(i, :width => 200, :height => 200, :crop => :fill) %>
   <% end %>
 </div>
 
