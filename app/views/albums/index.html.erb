@@ -1,7 +1,7 @@
 <% if @current_user.present? %>
-<h1>Albums</h1>
+<h1>Your Albums</h1>
 <% end %>
 
 <% @albums.each do |album| %>
-<%= link_to(album.name, album) %>
+<%= link_to album.name, album_path(album), :class => 'btn btn-outline-info' %>
 <% end %>
