@@ -1,19 +1,22 @@
 class AlbumsController < ApplicationController
-  before_action :check_for_login
+
 
   def index
     @albums = @current_user.albums
   end
 
   def show
+    check_for_login
     @album = Album.find(params[:id])
   end
 
   def new
+    check_for_login
     @album =  Album.new
   end
 
   def create
+    check_for_login
     # raise :hell
     album = Album.new(album_params)
     # This is the magic stuff that will let us upload an image to Cloudinary when
@@ -32,10 +35,12 @@ class AlbumsController < ApplicationController
   end
 
   def edit
+    check_for_login
     @album = Album.find(params[:id])
   end
 
   def update
+    check_for_login
     album = Album.find(params[:id])
     if params[:album][:images].present?
       params[:album][:images].each do |image|
@@ -46,6 +51,7 @@ class AlbumsController < ApplicationController
   end
 
   def destroy
+    check_for_login
     album = Album.find params[:id]
     album.destroy
     redirect_to root_path
