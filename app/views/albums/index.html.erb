@@ -2,14 +2,9 @@
 <h1>Your Albums</h1>
 <% end %>
 
-
-
-<!-- <div id="container"></div> -->
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js" charset="utf-8"></script>
 <script>
-  // const album1 = []
-  // const album2 = []
-  // const album3 = []
+
 
   let album1 = []
   <% @albums[0].images.each do |image| %>
@@ -26,64 +21,8 @@
     album3.push("https://res.cloudinary.com/djinkyjyh/image/upload/c_fill,h_360,w_640/"+"<%= image %>")
   <% end %>
 
-
-
-
-
-  //Arrays containing the image URLs for each album. To come from server.
-  // const album1 = ['http://placekitten.com/480/320',
-  //                   'http://placekitten.com/481/320',
-  //                   'http://placekitten.com/482/320',
-  //                   'http://placekitten.com/483/320',
-  //                   'http://placekitten.com/484/320',
-  //                   'http://placekitten.com/485/320',
-  //                   'http://placekitten.com/486/320',
-  //                   'http://placekitten.com/487/320',
-  //                   'http://placekitten.com/488/320',
-  //                   'http://placekitten.com/489/320',
-  //                   'http://placekitten.com/480/321',
-  //                   'http://placekitten.com/480/322',
-  //                   'http://placekitten.com/480/323',
-  //                   'http://placekitten.com/480/324',
-  //                   'http://placekitten.com/480/325']
-  // const album2 = ['http://placekitten.com/480/320',
-  //                   'http://placekitten.com/481/320',
-  //                   'http://placekitten.com/482/320',
-  //                   'http://placekitten.com/483/320',
-  //                   'http://placekitten.com/484/320',
-  //                   'http://placekitten.com/485/320',
-  //                   'http://placekitten.com/486/320',
-  //                   'http://placekitten.com/487/320',
-  //                   'http://placekitten.com/488/320',
-  //                   'http://placekitten.com/489/320',
-  //                   'http://placekitten.com/480/321',
-  //                   'http://placekitten.com/480/322',
-  //                   'http://placekitten.com/480/323',
-  //                   'http://placekitten.com/480/324',
-  //                   'http://placekitten.com/480/325']
-  // const album3 = ['http://placekitten.com/480/320',
-  //                   'http://placekitten.com/481/320',
-  //                   'http://placekitten.com/482/320',
-  //                   'http://placekitten.com/483/320',
-  //                   'http://placekitten.com/484/320',
-  //                   'http://placekitten.com/485/320',
-  //                   'http://placekitten.com/486/320',
-  //                   'http://placekitten.com/487/320',
-  //                   'http://placekitten.com/488/320',
-  //                   'http://placekitten.com/489/320',
-  //                   'http://placekitten.com/480/321',
-  //                   'http://placekitten.com/480/322',
-  //                   'http://placekitten.com/480/323',
-  //                   'http://placekitten.com/480/324',
-  //                   'http://placekitten.com/480/325']
-
   //Create ThreeJS scene
   const scene = new THREE.Scene();
-
-
-
-
-
 
   //Place threeJS scene into a container. TODO: modify to resize dynamically
   const container = document.getElementById("container")
@@ -112,10 +51,10 @@
   let canvas = document.querySelector("canvas")
   window.addEventListener('resize', () => {
     canvas = document.querySelector("canvas");
-  renderer.setSize(window.innerWidth,(window.innerHeight-150));
-  camera.aspect = window.innerWidth / (window.innerHeight-150);
-  camera.updateProjectionMatrix();
-  })
+    renderer.setSize(window.innerWidth,(window.innerHeight-150));
+    camera.aspect = window.innerWidth / (window.innerHeight-150);
+    camera.updateProjectionMatrix();
+  });
 
   //Object arrays contain the objects for each album
   const objects1 = [];
@@ -142,16 +81,15 @@
   scene.add(ambientLight);
   //Renders the scene
   const render = function() {
-    console.log("render")
-  requestAnimationFrame(render);
-  renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
   };
 
 
   //Loop creates invisible objects in the spread positions
   for(i = 0; i<15;i++) {
     const object = new THREE.Object3D();
-    object.position.x = ( (i % 5) * 18 ) - 36;
+    object.position.x = ( (i % 5) * 20 ) - 40;
     object.position.y = - ( Math.floor(i/5) * 12 ) +6;
     object.position.z = 0;
     grid.push( object );
@@ -228,20 +166,15 @@
   light.shadowDarkness = 0.5;
 
   //Set up shadow properties for the light
-  light.shadow.mapSize.width = 2048; // default
-  light.shadow.mapSize.height = 2048; // default
-  light.shadow.camera.near = 0.5; // default
-  light.shadow.camera.far = 500; // default
+  light.shadow.mapSize.width = 2048;
+  light.shadow.mapSize.height = 2048;
+  light.shadow.camera.near = 0.5;
+  light.shadow.camera.far = 500;
 
   //Find mouse location
-
   function onMouseMove( event ) {
-    // mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    // mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
     mouse.x = ( ( event.clientX - canvas.offsetLeft ) / canvas.clientWidth ) * 2 - 1;
     mouse.y = - ( ( event.clientY - canvas.offsetTop ) / canvas.clientHeight ) * 2 + 1;
-    // console.log(mouse.x)
-    // console.log(mouse.y)
   }
 
   //Stores states of albums and objects
@@ -252,6 +185,7 @@
     stackReturn: {x: '', y: ''},
     zoomedObject: '',
     unstackedAlbum: '',
+    tilted: ''
   }
   let int1;
   let int2;
@@ -277,9 +211,6 @@
         selected = clickedItems[i]
       }
     }
-    // console.log(selected)
-    // console.log(`stacked ${state.stacked}` )
-    // console.log(`zoomed ${state.zoomed}` )
 
 
     //if you click on an album, unstack that album & set stacked state false
@@ -291,7 +222,6 @@
       state.stackReturn.x = selected[0].object.position.x
       state.stackReturn.y = selected[0].object.position.y
       state.stacked = false;
-      // console.log(state.stackReturn)
     }
     //If you click on blank space with an album unstacked, stack it.
     if (!selected && !state.stacked) {
@@ -301,7 +231,6 @@
 
     //This handles zoom in and zoom out. It must be an if/else if to work
     if (state.zoomed ) {
-      // console.log(state.zoomReturn)
       zoomOut(state.zoomedObject)
       state.zoomed = false;
     } else if (!state.stacked && !state.zoomed && selected.length === 1) {
@@ -312,7 +241,6 @@
       state.zoomReturn.z = (selected[0].object.position.z)
       state.zoomed = true;
     }
-
   }
   //Listen for click and mouse move
   window.addEventListener('click', click, false);
@@ -320,7 +248,6 @@
 
   // Moves selected images to the grid positions
   const unstack = function(selected) {
-    // console.log('unstacking')
     for ( i = 0; i < selected.length; i++ ) {
       const picture = selected[i].object
       this.tl = new TimelineMax()
@@ -335,14 +262,11 @@
         z: grid[i].position.z,
         delay: ( i * 0.02 )
       })
-
     }
   }
 
   // Returns selected images to their original stacked position
   const stack = function( album ) {
-    // console.log( 'stacking' )
-
     for ( i = 0; i < album.length ; i++ ) {
       const picture = album[i].object
       let rotation = ( Math.random() * 0.4 ) - 0.2
@@ -371,48 +295,42 @@
 
   // Puts a picture back to it's grid position
   const zoomOut = function(picture) {
-    // console.log('zooming out')
     this.tl = new TimelineMax()
-    // console.log(`${toX}, ${toY}, ${toZ}`)
     this.tl.to(picture.position, 0.4, {
       x: state.zoomReturn.x,
       y: state.zoomReturn.y,
       z: 0
     })
   }
-  //
 
-  //
+  // Emphasize the picture by putting it slightly above the others when mouse hover
+  const tilt = function(event) {
+    event.preventDefault();
+  	onMouseMove(event);
+  	raycaster.setFromCamera(mouse, camera);
+    int1 = raycaster.intersectObjects(objects1);
+    int2 = raycaster.intersectObjects(objects2);
+    int3 = raycaster.intersectObjects(objects3);
+    const intersected = int1.concat(int2, int3)
+    if(!state.stacked && !state.zoomed && intersected.length === 1){
+      state.tilted = intersected[0];
+      this.tl = new TimelineMax()
+      this.tl.to(intersected[0].object.position, 0.4, {
+        z: 2,
+        delay: 0.001
+      })
+    } else if (intersected.length === 0 && state.tilted !== '' && !state.zoomed){
+      this.tl = new TimelineMax()
+      this.tl.to(state.tilted.object.position, 0.4, {
+        z: 0,
+        delay: 0.001
+      })
+      state.tilted = ''
+    }
+  }
+  window.addEventListener('mousemove', tilt, false);
 
-  // const tilt = function(event) {
-  //   event.preventDefault();
-  // 	onMouseMove(event);
-  // 	raycaster.setFromCamera(mouse, camera);
-  // 	intersected = raycaster.intersectObjects(objects);
-  //   if(!state.stacked && !state.zoomed && intersected.length > 0){
-  //     this.tl = new TimelineMax()
-  //     this.tl.to(intersected[0].object.position, 0.4, {
-  //       z: 2,
-  //       delay: 0.001
-  //     })
-  //   } else if (state.zoomed || state.stacked){
-  //
-  //   } else {
-  //     for (i=0;i<objects.length;i++) {
-  //
-  //       this.tl = new TimelineMax()
-  //       this.tl.to(objects[i].position, 0.4, {
-  //         x: grid[i].position.x,
-  //         y: grid[i].position.y,
-  //         z: 0,
-  //         delay: 0.001
-  //       })
-  //     }
-  //   }
-  // }
-  // window.addEventListener('mousemove', tilt, false);
-
-render();
+  render();
 
 
 </script>
