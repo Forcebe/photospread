@@ -11,52 +11,53 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <%= cloudinary_js_config %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= cloudinary_js_config %>
+
   </head>
 
-  <body>
+    <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" <%= link_to 'Photospread', root_path %></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <% if @current_user.present? %>
-            <% if @current_user.admin? %>
-          <li class="nav-item">
-            <a class="nav-link" <%= link_to 'All users', users_path %><span class="sr-only">(current)</span></a>
-            <% end %>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" <%= link_to image_tag("camera-icon.jpg", :height => 30, :alt => ""), root_path %></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
             <% if @current_user.present? %>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" <%= link_to 'New Album', new_album_path %></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" <%= link_to 'Gallery', albums_path %></a>
-            <% end %>
-          <li class="nav-item">
-            <a class="nav-link" <%= link_to "Log out", login_path, :method => 'delete'%></a>
-          </li>
-          <% else %>
-          <li class="nav-item">
-            <a class="nav-link" <%= link_to 'Sign up', new_user_path %></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" <%= link_to 'Login', login_path %></a>
-          </li>
-          <% end %>
-          <li class="nav-item">
-            <a class="nav-link" <%= link_to 'Back', :back %></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+              <% if @current_user.admin? %>
+            <li class="nav-item">
+              <a class="nav-link" <%= link_to 'All users', users_path %><span class="sr-only">(current)</span></a>
+              <% end %>
+              <% if @current_user.present? %>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" <%= link_to 'New Album', new_album_path %></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" <%= link_to 'Gallery', albums_path %></a>
+              <% end %>
+            <li class="nav-item">
+              <a class="nav-link" <%= link_to "Log out", login_path, :method => 'delete'%></a>
+            </li>
+              <% else %>
+            <li class="nav-item">
+              <a class="nav-link" <%= link_to 'Sign up', new_user_path %></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" <%= link_to 'Login', login_path %></a>
+            </li>
+              <% end %>
+            <li class="nav-item">
+              <a class="nav-link" <%= link_to 'Back', :back %></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-    <%= yield %>
-  </body>
+      <%= yield %>
+    </body>
 
   <footer>
     <p id="footer">&#169;2020-DreamDevelopers | All rights reserved</p>

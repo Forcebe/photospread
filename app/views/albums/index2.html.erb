@@ -1,15 +1,16 @@
 <% if @current_user.present? %>
-<h1>Albums</h1>
+  <h1>Albums</h1>
 <% end %>
 
 <% @albums.each do |album| %>
-<%= link_to(album.name, album) %>
+  <%= link_to(album.name, album) %>
 <% end %>
-<script>
 
-console.log("<%= @albums[1].pictures[0].url %>")
-console.log("<%= @albums[1].pictures[1].url %>")
-console.log("<%= @albums[1].pictures[2].url %>")
-console.log("<%= @albums[1].pictures.length %>")
+<script>
+  
+  console.log("<%= @albums[1].pictures[0].url %>")
+  console.log("<%= @albums[1].pictures[1].url %>")
+  console.log("<%= @albums[1].pictures[2].url %>")
+  console.log("<%= @albums[1].pictures.length %>")
 
 </script>
