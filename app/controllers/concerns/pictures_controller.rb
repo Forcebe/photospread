@@ -1,5 +1,5 @@
 class PicturesController < ApplicationController
-
+  before_action :check_for_login
   def index
     @pictures = Picture.all
   end
@@ -47,7 +47,7 @@ class PicturesController < ApplicationController
 
   private
   def picture_params
-    params.require(:picture).permit(:user_id, :album_id, :url) 
+    params.require(:picture).permit(:user_id, :album_id, :url)
   end
 
 

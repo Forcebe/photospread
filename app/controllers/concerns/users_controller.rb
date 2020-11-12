@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   def index
+    check_for_login
     @users = User.all
   end
 
@@ -19,6 +20,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    check_for_login
     @user = User.find params[:id]
     @user.destroy
     redirect_to users_path
