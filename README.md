@@ -62,6 +62,6 @@ Created by [Guillaume Canneton](https://github.com/gcrk), [Robert Stoelhorst](ht
 
 Thanks to course instructors [Joel Turnbull](https://github.com/wofockham) and [Camilla Champion de Crespigny](https://github.com/CamillaCdC)
 
-[![Twitter link](https://img.shields.io/twitter/follow/forcebe_?label=Follow%20me%20on%20Twitter&style=social)](https://twitter.com/Forcebe_)
+[![Twitter link](https://img.shields.io/twitter/follow/forcebe_?style=social)](https://twitter.com/Forcebe_)
 [![Twitter link](https://img.shields.io/twitter/follow/guicanrk?style=social)](https://twitter.com/guicanrk)
 [![Twitter link](https://img.shields.io/twitter/follow/RStoelhorst?style=social)](https://twitter.com/guicanrk)
