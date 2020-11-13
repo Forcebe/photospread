@@ -54,4 +54,14 @@ Features that were not completed in the project time limit but could be added to
 ##### Major
 * Better sharing and viewing of galleries
 * Allowing a user to have any number of albums
+* Allow more than 15 pictures per album
 * Redesigned home page with animation
+
+## Acknowledgement
+Created by [Guillaume Canneton](https://github.com/gcrk), [Robert Stoelhorst](https://github.com/RobertStoelhorst) and [Nick Mather](https://github.com/Forcebe).
+
+Thanks to course instructors [Joel Turnbull](https://github.com/wofockham) and [Camilla Champion de Crespigny](https://github.com/CamillaCdC)
+
+[![Twitter link](https://img.shields.io/twitter/follow/forcebe_?label=Follow%20me%20on%20Twitter&style=social)](https://twitter.com/Forcebe_)
+[![Twitter link](https://img.shields.io/twitter/follow/guicanrk?style=social)](https://twitter.com/guicanrk)
+[![Twitter link](https://img.shields.io/twitter/follow/RStoelhorst?style=social)](https://twitter.com/guicanrk)
